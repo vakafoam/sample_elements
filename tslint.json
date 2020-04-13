@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react-hooks",
+    "tslint-config-airbnb",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "defaultSeverity": "error",
+  "compilerOptions": {
+    "baseUrl": "./src"
+  },
+  "jsRules": {},
+  "rules": {
+    "react-hooks-nesting": "error",
+    "array-type": false,
+    "arrow-parens": false,
+    "quotemark": [true, "double", "jsx-double"],
+    "import-name": false,
+    "object-literal-sort-keys": false,
+    "interface-name": false,
+    "member-access": false,
+    "ordered-imports": false,
+    "jsx-boolean-value": false,
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "jsx-no-multiline-js": false,
+    "variable-name": [true, "allow-pascal-case"],
+    "no-empty": false,
+    "jsx-no-lambda": false,
+    "no-unused-variable": true,
+    "no-relative-imports": true,
+    "no-console": [false]
+  }
+}

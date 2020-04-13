@@ -1,0 +1,58 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "plugins": ["react", "prettier"],
+  "globals": {
+    "React": true,
+    "PropTypes": true,
+    "Component": true,
+    "connect": true,
+    "createSelector": true,
+    "createStructuredSelector": true,
+    "axios": true,
+    "moment": true,
+    "Link": true,
+    "NavLink": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "semi": false,
+        "jsxBracketSameLine": true,
+        "printWidth": 120,
+        "useTabs": false,
+        "tabWidth": 4
+      }
+    ],
+    "arrow-body-style": ["error", "as-needed"],
+    "no-var": ["error"],
+    "prefer-const": ["error"],
+    "prefer-template": ["error"],
+    "react/jsx-no-undef": [
+      "error",
+      {
+        "allowGlobals": true
+      }
+    ],
+    "react/jsx-no-bind": ["error"]
+  }
+}
