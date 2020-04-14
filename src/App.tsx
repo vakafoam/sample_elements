@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-import SwiperSelect from "./SwiperSelect";
+import SwiperSelect, { OptionType } from "./SwiperSelect";
+import { getSelectedOption } from "./SwiperSelect/helpers";
 
-const selectOptions = [
+const selectOptions: OptionType[] = [
   { value: "2121", text: "2121" },
   { value: "2122", text: "2122" },
   { value: "2123", text: "2123" },
@@ -20,13 +21,26 @@ const selectOptions = [
   { value: "2136", text: "2136" },
 ];
 
-function App() {
+const App = () => {
+  const [selectedValue, setSelectedValue] = useState<
+    Pick<OptionType, "value">
+  >();
+
+  const onSubmit = (val: Pick<OptionType, "value">) => {
+    setSelectedValue(val);
+  };
+
   return (
     <div className="App">
-      Hello
-      <SwiperSelect options={selectOptions} />
+      {selectedValue
+        ? `Selected value: ${selectedValue}`
+        : `Default value: ${getSelectedOption(selectOptions).value}`}
+      <br />
+      <br />
+      <br />
+      <SwiperSelect options={selectOptions} onSubmit={onSubmit} />
     </div>
   );
-}
+};
 
 export default App;

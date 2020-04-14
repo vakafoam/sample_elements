@@ -1,87 +1,24 @@
 import React, { useState, useEffect, KeyboardEvent } from "react";
-import styled from "../style/styled-components";
-import { ITEM_WIDTH, SETTINGS } from "./constants";
+import {
+  SelectWrapper,
+  SelectContent,
+  SelectOptions,
+  SelectedTag,
+  SelectOption,
+  SubmitButton,
+  ValueUnits,
+} from "./componentsStyled";
+import { ITEM_WIDTH } from "./constants";
 import { findSelectedItemIndex } from "./helpers";
 import { OptionType, SettingsType } from "./";
-
-const SelectWrapper = styled.section`
-  // display: flex;
-  width: 80%;
-  position: relative;
-  overflow: hidden;
-  margin: auto;
-  background: black;
-`;
-
-const SelectContent = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: flex-start;
-  flex-flow: row nowrap;
-  flex-shrink: 1;
-  flex-grow: 0;
-  background: pink;
-  overflow: hidden;
-  left: calc(50% - ${ITEM_WIDTH / 2}px); // active item in the middle
-`;
-
-const SelectOptions = styled.div`
-  display: flex;
-  position: relative;
-  background: white;
-  //   align-items: center;
-  cursor: pointer;
-  justify-content: center;
-
-  // From info element
-  position: relative;
-  //   display: block;
-  flex-direction: column;
-  background: yellow;
-  height: 80px;
-  flex-shrink: 0;
-  width: ${ITEM_WIDTH}px;
-`;
-
-const TimelineInfo = styled.div`
-  position: relative;
-  display: block;
-  background: yellow;
-  height: 100%;
-  flex-shrink: 0;
-  width: ${ITEM_WIDTH}px;
-`;
-
-const SelectedTag = styled.span`
-  position: absolute;
-  width: 100%;
-  top: 5px;
-  display: block;
-  justify-self: flex-start;
-  text-align: center;
-  font-size: 12px;
-`;
-
-const SelectOption = styled.p<{ isActive: boolean }>`
-  box-sizing: border-box;
-  justify-self: center;
-  line-height: 1;
-  text-align: center;
-  position: relative;
-  font-size: ${({ isActive }) => (isActive ? "26px" : "24px")};
-  font-weight: 400;
-  margin: 0;
-  color: ${({ isActive }) => (isActive ? "blue" : "black")};
-  transition: font-size 0.1s ease-out;
-  transition-delay: 0.2s;
-`;
 
 interface PropsType {
   options: OptionType[];
   settings: SettingsType;
+  onSubmit: (v: Pick<OptionType, "value">) => void;
 }
 
-const SwipeToSelect = ({ options, settings }: PropsType) => {
+const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
   const [itemsNum, setItemsNum] = useState<number>(0);
   const [i, setI] = useState<number>(0);
   const [x0, setX0] = useState<number | null>(null);
@@ -89,6 +26,7 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [transformValue, setTransformValue] = useState<string>();
+  const [tempI, setTempI] = useState<number>();
 
   useEffect(() => {
     const selectedIndex = findSelectedItemIndex(options);
@@ -101,6 +39,8 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
     const newTransform = `translate(${(i * -100) /
       itemsNum}%) translate(${tx}px)`;
     setTransformValue(newTransform);
+    // tempI highlights a passing option while dragging
+    setTempI(i - Math.round(tx / ITEM_WIDTH));
   }, [i, tx]);
 
   // Lock the Options from moving to the next slide while user drags
@@ -110,17 +50,7 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
     setIsDragging(true);
   };
 
-  //   unlock = e => {
-  //     const x0 = this.unify(e).clientX;
-  //     this.setState({ x0, isDragging: false });
-  //   };
-
-  const isItemActive = (id: number) => {
-    const el = document.getElementById(`item_${id}`);
-    console.log("Element", el && el.getBoundingClientRect());
-  };
-
-  const move = (e: any, idx?: number) => {
+  const move = (e: any, idx?: number): void => {
     const dx = unify(e).clientX - (x0 || 0);
     if (idx !== undefined && Math.abs(dx) < 5) {
       // handle only click
@@ -145,9 +75,8 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
   };
 
   // Manage the UI response while user drags the Timeline
-  const drag = (e: any) => {
+  const drag = (e: any): void => {
     if (isDragging) {
-      // console.log("EVENT", e);
       if (!e.changedTouches) e.preventDefault();
       e.stopPropagation();
 
@@ -156,22 +85,7 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
     }
   };
 
-  const updateItem = (e: any, idx: number) => {
-    e.stopPropagation();
-    // TODO: check if dragging, then don't update
-    const dx = unify(e).clientX - (x0 || 0);
-    console.log("click: ", dx);
-
-    if (idx && Math.abs(dx)) {
-      // handle only click
-      console.log("IDX", idx);
-      setI(idx);
-      setIsDragging(false);
-    }
-    //   this.setState({ i: index  })
-  };
-
-  const onKeyDown = (e: KeyboardEvent) => {
+  const onKeyDown = (e: KeyboardEvent): void => {
     if (e.keyCode === 37 || e.keyCode === 40) {
       if (i === 0) return;
       setI(i - 1);
@@ -181,16 +95,8 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
     }
   };
 
-  // const onScroll = (e: any) => {
-  //   console.log("Scroll", e);
-  //   e = window.event || e;
-  //   var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail));
-  //   // @ts-ignore
-  //   document.getElementById("selectContent").scrollLeft -= delta * 40; // Multiplied by 40
-  //   e.preventDefault();
-  // };
-
   const getContentStyles = () => {
+    console.log("transform", transformValue);
     return {
       width: `${itemsNum * ITEM_WIDTH}px`,
       transform: transformValue,
@@ -198,43 +104,63 @@ const SwipeToSelect = ({ options, settings }: PropsType) => {
     };
   };
 
+  const getOptionOpacity = (id: number): number => {
+    if (id === tempI) return 1;
+    if (Math.abs((tempI || i) - id) > 5) return 0.3;
+    return 1 - Math.abs((((tempI || i) - id) * 2) / 10);
+  };
+
   return (
-    <SelectWrapper>
-      <SelectContent
-        // id="selectContent"
-        onMouseDown={lock}
-        //   onMouseUp={this.move}
-        // onMouseUp={this.unlock}
-        onMouseMove={drag}
-        onTouchStart={lock}
-        onTouchEnd={move}
-        onTouchMove={drag}
-        onKeyDown={onKeyDown}
-        onMouseLeave={move}
-        style={getContentStyles()}
-        // onScroll={onScroll}
-        tabIndex={0}
-      >
-        {options.map(({ value, text }, idx) => (
-          <SelectOptions id={`item_${idx}`} key={`item_${idx}`}>
-            {selected === i && i === idx && (
-              <SelectedTag>Current choice</SelectedTag>
-            )}
-            <SelectOption
-              onClick={e => move(e, idx)}
-              onDoubleClick={e => {
-                e.preventDefault();
-                move(e, idx);
-              }}
-              isActive={i === idx}
-              // isActive={this.isItemActive(idx)}
+    <>
+      <SelectWrapper settings={settings}>
+        <SelectContent
+          onMouseDown={lock}
+          onMouseMove={drag}
+          onTouchStart={lock}
+          onTouchEnd={move}
+          onTouchMove={drag}
+          onKeyDown={onKeyDown}
+          onMouseLeave={move}
+          style={getContentStyles()}
+          tabIndex={0}
+          settings={settings}
+        >
+          {options.map(({ text }, idx) => (
+            <SelectOptions
+              id={`item_${idx}`}
+              key={`item_${idx}`}
+              settings={settings}
             >
-              {text}
-            </SelectOption>
-          </SelectOptions>
-        ))}
-      </SelectContent>
-    </SelectWrapper>
+              {selected === i && i === idx && (
+                <SelectedTag settings={settings}>Current choice</SelectedTag>
+              )}
+              <SelectOption
+                onClick={e => move(e, idx)}
+                onDoubleClick={e => {
+                  e.preventDefault();
+                  move(e, idx);
+                }}
+                isActive={i === idx || idx === tempI}
+                opacity={getOptionOpacity(idx)}
+                settings={settings}
+              >
+                {text}
+              </SelectOption>
+            </SelectOptions>
+          ))}
+        </SelectContent>
+      </SelectWrapper>
+      <ValueUnits settings={settings}>{settings.units}</ValueUnits>
+      <br />
+      <SubmitButton
+        type="submit"
+        // @ts-ignore
+        onClick={() => onSubmit(options[i].value)}
+        settings={settings}
+      >
+        Submit
+      </SubmitButton>
+    </>
   );
 };
 

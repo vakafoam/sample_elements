@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styled from "../style/styled-components";
-import SwipeToSelect from "./SwipeToSelect";
 
+import SwipeToSelect from "./SwipeToSelect";
+import {
+  EnableEdit,
+  SelectedState,
+  SelectedValue,
+  ValueUnits,
+} from "./componentsStyled";
 import { getFinalSettings, getSelectedOption } from "./helpers";
 
 export interface SettingsType {
@@ -9,65 +14,29 @@ export interface SettingsType {
   height?: string;
   backgroundColor?: string;
   fontColor?: string;
+  activeFontColor?: string;
   fontFamily?: string;
   fontSize?: string;
   units?: string;
 }
 
-interface SettingsPropsType {
-  settings: SettingsType;
-}
-
-const SelectedState = styled.div<{ settings: SettingsType }>`
-  display: flex;
-  box-sizing: border-box;
-  justify-content: space-between;
-  width: ${({ settings }) => settings.width};
-  height: ${({ settings }) => settings.height};
-  background: ${({ settings }) => settings.backgroundColor};
-  color: ${({ settings }) => settings.fontColor};
-  font-size: ${({ settings }) => settings.fontSize};
-  margin: auto;
-  padding: 10px;
-  border-radius: 5px;
-`;
-
-const SelectedValue = styled.span<{ settings: SettingsType }>`
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  justify-content: center;
-  margin-left: ${({ settings }) => settings.fontSize};
-`;
-const ValueUnits = styled.span<{ settings: SettingsType }>`
-  font-size: calc(${({ settings }) => settings.fontSize} - 8px);
-`;
-const EnableEdit = styled.button<{ settings: SettingsType }>`
-  position: relative;
-  display: block;
-  justify-self: flex-end;
-  align-self: center;
-  border: none;
-  padding: 20px;
-  background-color: transparent;
-  color: ${({ settings }) => settings.fontColor};
-  cursor: pointer;
-  text-transform: uppercase;
-  text-decoration: underline;
-`;
+// interface SettingsPropsType {
+//   settings: SettingsType;
+// }
 
 export interface OptionType {
-  value: string | number | boolean;
-  text?: string | number | boolean;
+  value: string | number;
+  text?: string | number;
   selected?: boolean;
 }
 
 export interface PropsType {
   options: OptionType[];
   settings?: SettingsType;
+  onSubmit: (v: Pick<OptionType, "value">) => void;
 }
 
-const SwiperSelect = ({ options, settings }: PropsType) => {
+const SwiperSelect = ({ options, settings, onSubmit }: PropsType) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<OptionType>();
   const finalSettings = getFinalSettings(settings);
@@ -78,7 +47,11 @@ const SwiperSelect = ({ options, settings }: PropsType) => {
   }, []);
 
   return editMode ? (
-    <SwipeToSelect options={options} settings={finalSettings} />
+    <SwipeToSelect
+      options={options}
+      settings={finalSettings}
+      onSubmit={onSubmit}
+    />
   ) : (
     <SelectedState settings={finalSettings}>
       <SelectedValue settings={finalSettings}>
