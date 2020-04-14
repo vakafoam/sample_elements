@@ -22,23 +22,34 @@ const selectOptions: OptionType[] = [
 ];
 
 const App = () => {
+  const [options, setOptions] = useState<OptionType[]>(selectOptions);
   const [selectedValue, setSelectedValue] = useState<
     Pick<OptionType, "value">
   >();
 
   const onSubmit = (val: Pick<OptionType, "value">) => {
     setSelectedValue(val);
+
+    const optionsUpdated = options.map(o => {
+      o.selected = false;
+
+      // @ts-ignore
+      if (o.value === val) o.selected = true;
+      return o;
+    });
+    console.log("OPTIONS, ", options);
+    setOptions(optionsUpdated);
   };
 
   return (
     <div className="App">
       {selectedValue
         ? `Selected value: ${selectedValue}`
-        : `Default value: ${getSelectedOption(selectOptions).value}`}
+        : `Default value: ${getSelectedOption(options).value}`}
       <br />
       <br />
       <br />
-      <SwiperSelect options={selectOptions} onSubmit={onSubmit} />
+      <SwiperSelect options={options} onSubmit={onSubmit} />
     </div>
   );
 };

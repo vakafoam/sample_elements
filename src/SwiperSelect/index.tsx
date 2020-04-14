@@ -44,13 +44,18 @@ const SwiperSelect = ({ options, settings, onSubmit }: PropsType) => {
   useEffect(() => {
     const selected = getSelectedOption(options);
     setSelectedOption(selected);
-  }, []);
+  }, [options]);
+
+  const onSubmitValue = (val: Pick<OptionType, "value">) => {
+    setEditMode(false);
+    onSubmit(val);
+  };
 
   return editMode ? (
     <SwipeToSelect
       options={options}
       settings={finalSettings}
-      onSubmit={onSubmit}
+      onSubmit={onSubmitValue}
     />
   ) : (
     <SelectedState settings={finalSettings}>
