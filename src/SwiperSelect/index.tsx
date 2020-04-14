@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "../style/styled-components";
-import SwipeToSelect from "./SwipeToSelect.jsx";
+import SwipeToSelect from "./SwipeToSelect";
 
 import { getFinalSettings, getSelectedOption } from "./helpers";
 
