@@ -1,5 +1,5 @@
-import { SETTINGS } from "SwiperSelect/constants";
-import { OptionType, SettingsType } from "SwiperSelect";
+import { SETTINGS, SettingsType } from "SwiperSelect/constants";
+import { OptionType } from "SwiperSelect";
 
 export const getFinalSettings = (settings?: SettingsType): SettingsType =>
   settings ? { ...SETTINGS, ...settings } : SETTINGS;

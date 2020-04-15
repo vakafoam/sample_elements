@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SwipeToSelect should render correctly and match the snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`SwiperSelect should render correctly and match the snapshot 1`] = `ShallowWrapper {}`;

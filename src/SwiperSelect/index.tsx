@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { SettingsType } from "SwiperSelect/constants";
 
 import SwipeToSelect from "SwiperSelect/SwipeToSelect";
 import {
@@ -8,21 +9,6 @@ import {
   ValueUnits,
 } from "SwiperSelect/componentsStyled";
 import { getFinalSettings, getSelectedOption } from "SwiperSelect/helpers";
-
-export interface SettingsType {
-  width?: string;
-  height?: string;
-  backgroundColor?: string;
-  fontColor?: string;
-  activeFontColor?: string;
-  fontFamily?: string;
-  fontSize?: string;
-  units?: string;
-}
-
-// interface SettingsPropsType {
-//   settings: SettingsType;
-// }
 
 export interface OptionType {
   value: string | number;

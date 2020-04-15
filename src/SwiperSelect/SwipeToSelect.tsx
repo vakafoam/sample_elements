@@ -8,9 +8,9 @@ import {
   SubmitButton,
   ValueUnits,
 } from "SwiperSelect/componentsStyled";
-import { ITEM_WIDTH } from "SwiperSelect/constants";
+import { ITEM_WIDTH, SettingsType } from "SwiperSelect/constants";
 import { findSelectedItemIndex } from "SwiperSelect/helpers";
-import { OptionType, SettingsType } from "SwiperSelect";
+import { OptionType } from "SwiperSelect";
 
 interface PropsType {
   options: OptionType[];
@@ -57,7 +57,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
       setI(idx);
       setIsDragging(false);
     } else if (isDragging) {
-      const s = Math.round((dx * 1) / ITEM_WIDTH);
+      const s = Math.round(dx / ITEM_WIDTH);
 
       if ((i > 0 || s < 0) && (i < itemsNum - 1 || s > 0)) {
         const newI = i - s < 0 ? 0 : i - s >= itemsNum ? itemsNum - 1 : i - s; // not sliding beyond min-max values

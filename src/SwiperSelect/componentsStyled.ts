@@ -1,6 +1,5 @@
 import styled from "style/styled-components";
-import { SettingsType } from "SwiperSelect";
-import { ITEM_WIDTH } from "SwiperSelect/constants";
+import { ITEM_WIDTH, SettingsType } from "SwiperSelect/constants";
 
 export const SelectedState = styled.div<{ settings: SettingsType }>`
   display: flex;
@@ -82,6 +81,7 @@ export const SelectedTag = styled.span<{ settings: SettingsType }>`
   line-height: 1;
   color: ${({ settings }) => settings.activeFontColor};
   font-size: calc(${({ settings }) => settings.fontSize} - 12px);
+  transition: opacity 2s ease-out;
 `;
 
 export const SelectOption = styled.span<{
@@ -112,6 +112,6 @@ export const SubmitButton = styled.button<{ settings: SettingsType }>`
   border-radius: 5px;
   border: none;
   text-transform: uppercase;
-  background: blue;
+  background: ${({ settings }) => settings.backgroundColor};
   color: white;
 `;
