@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import SwipeToSelect from "./SwipeToSelect";
+import SwipeToSelect from "SwiperSelect/SwipeToSelect";
 import {
   EnableEdit,
   SelectedState,
   SelectedValue,
   ValueUnits,
-} from "./componentsStyled";
-import { getFinalSettings, getSelectedOption } from "./helpers";
+} from "SwiperSelect/componentsStyled";
+import { getFinalSettings, getSelectedOption } from "SwiperSelect/helpers";
 
 export interface SettingsType {
   width?: string;

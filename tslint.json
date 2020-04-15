@@ -7,10 +7,9 @@
     "tslint-config-prettier"
   ],
   "defaultSeverity": "error",
-  "compilerOptions": {
-    "baseUrl": "./src"
-  },
   "jsRules": {},
+  "include": ["src"],
+  "exclude": ["node_modules"],
   "rules": {
     "react-hooks-nesting": "error",
     "array-type": false,
@@ -29,6 +28,6 @@
     "jsx-no-lambda": false,
     "no-unused-variable": true,
     "no-relative-imports": true,
-    "no-console": [false]
+    "no-console": [true]
   }
 }

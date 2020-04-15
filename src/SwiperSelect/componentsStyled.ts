@@ -1,6 +1,6 @@
-import styled from "../style/styled-components";
-import { SettingsType } from "./";
-import { ITEM_WIDTH } from "./constants";
+import styled from "style/styled-components";
+import { SettingsType } from "SwiperSelect";
+import { ITEM_WIDTH } from "SwiperSelect/constants";
 
 export const SelectedState = styled.div<{ settings: SettingsType }>`
   display: flex;

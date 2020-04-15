@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./App.css";
-import SwiperSelect, { OptionType } from "./SwiperSelect";
-import { getSelectedOption } from "./SwiperSelect/helpers";
+import "App.css";
+import SwiperSelect, { OptionType } from "SwiperSelect";
+import { getSelectedOption } from "SwiperSelect/helpers";
 
 const selectOptions: OptionType[] = [
   { value: "2121", text: "2121" },
@@ -37,20 +37,19 @@ const App = () => {
       if (o.value === val) o.selected = true;
       return o;
     });
-    console.log("OPTIONS, ", options);
     setOptions(optionsUpdated);
   };
 
   return (
-    <div className="App">
-      {selectedValue
-        ? `Selected value: ${selectedValue}`
-        : `Default value: ${getSelectedOption(options).value}`}
-      <br />
-      <br />
+    <section className="App">
+      <h1>
+        {selectedValue
+          ? `Selected value: ${selectedValue}`
+          : `Default value: ${getSelectedOption(options).value}`}
+      </h1>
       <br />
       <SwiperSelect options={options} onSubmit={onSubmit} />
-    </div>
+    </section>
   );
 };
 

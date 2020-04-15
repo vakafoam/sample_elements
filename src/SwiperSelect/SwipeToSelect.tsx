@@ -7,10 +7,10 @@ import {
   SelectOption,
   SubmitButton,
   ValueUnits,
-} from "./componentsStyled";
-import { ITEM_WIDTH } from "./constants";
-import { findSelectedItemIndex } from "./helpers";
-import { OptionType, SettingsType } from "./";
+} from "SwiperSelect/componentsStyled";
+import { ITEM_WIDTH } from "SwiperSelect/constants";
+import { findSelectedItemIndex } from "SwiperSelect/helpers";
+import { OptionType, SettingsType } from "SwiperSelect";
 
 interface PropsType {
   options: OptionType[];
@@ -33,7 +33,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
     setI(selectedIndex);
     setSelected(selectedIndex);
     if (options.length) setItemsNum(options.length);
-  }, []);
+  }, [options]);
 
   useEffect(() => {
     const newTransform = `translate(${(i * -100) /
@@ -41,7 +41,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
     setTransformValue(newTransform);
     // tempI highlights a passing option while dragging
     setTempI(i - Math.round(tx / ITEM_WIDTH));
-  }, [i, tx]);
+  }, [i, tx, itemsNum]);
 
   // Lock the Options from moving to the next slide while user drags
   const lock = (e: any) => {
@@ -96,7 +96,6 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
   };
 
   const getContentStyles = () => {
-    console.log("transform", transformValue);
     return {
       width: `${itemsNum * ITEM_WIDTH}px`,
       transform: transformValue,
@@ -106,7 +105,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
 
   const getOptionOpacity = (id: number): number => {
     if (id === tempI) return 1;
-    if (Math.abs((tempI || i) - id) > 5) return 0.3;
+    if (Math.abs((tempI || i) - id) > 4) return 0.3;
     return 1 - Math.abs((((tempI || i) - id) * 2) / 10);
   };
 

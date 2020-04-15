@@ -1,6 +1,7 @@
-import { SettingsType } from "./";
+import { SettingsType } from "SwiperSelect";
 
-export const ITEM_WIDTH = 100; //default item width in px
+// default item width in px
+export const ITEM_WIDTH = 100;
 
 export const SETTINGS: SettingsType = {
   width: "80%",
