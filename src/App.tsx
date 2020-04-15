@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "App.css";
 import SwiperSelect, { OptionType } from "SwiperSelect";
 import { getSelectedOption } from "SwiperSelect/helpers";
+import { SettingsType } from "SwiperSelect/constants";
 
 const selectOptions: OptionType[] = [
   { value: "2121", text: "2121" },
@@ -21,18 +22,29 @@ const selectOptions: OptionType[] = [
   { value: "2136", text: "2136" },
 ];
 
+const customSettings: SettingsType = {
+  width: "50%",
+  height: "50px",
+  backgroundColor: "#BBB",
+  fontColor: "#333",
+  activeFontColor: "black",
+  fontFamily: "Open Sans",
+  fontSize: "18px",
+  units: "€/Month",
+};
+
 const App = () => {
   const [options, setOptions] = useState<OptionType[]>(selectOptions);
-  const [selectedValue, setSelectedValue] = useState<
+  const [selectedValue1, setSelectedValue1] = useState<
+    Pick<OptionType, "value">
+  >();
+  const [selectedValue2, setSelectedValue2] = useState<
     Pick<OptionType, "value">
   >();
 
-  const onSubmit = (val: Pick<OptionType, "value">) => {
-    setSelectedValue(val);
-
+  const updateOptions = (val: Pick<OptionType, "value">) => {
     const optionsUpdated = options.map(o => {
       o.selected = false;
-
       // @ts-ignore
       if (o.value === val) o.selected = true;
       return o;
@@ -40,15 +52,39 @@ const App = () => {
     setOptions(optionsUpdated);
   };
 
+  const onSubmit1 = (val: Pick<OptionType, "value">) => {
+    setSelectedValue1(val);
+    updateOptions(val);
+  };
+
+  const onSubmit2 = (val: Pick<OptionType, "value">) => {
+    setSelectedValue2(val);
+    updateOptions(val);
+  };
+
   return (
     <section className="App">
-      <h1>
-        {selectedValue
-          ? `Selected value: ${selectedValue}`
-          : `Default value: ${getSelectedOption(options).value}`}
-      </h1>
-      <br />
-      <SwiperSelect options={options} onSubmit={onSubmit} />
+      <h2>Default-styled Select element</h2>
+      <h2>
+        {selectedValue1
+          ? `Selected value 1: ${selectedValue1}`
+          : `Default value 1: ${getSelectedOption(options).value}`}
+      </h2>
+      <SwiperSelect options={options} onSubmit={onSubmit1} />
+
+      <div style={{ height: "100px" }} />
+
+      <h2>Customly-styled Select element</h2>
+      <h2>
+        {selectedValue2
+          ? `Selected value 2: ${selectedValue2}`
+          : `Default value 2: ${getSelectedOption(options).value}`}
+      </h2>
+      <SwiperSelect
+        options={options}
+        onSubmit={onSubmit2}
+        settings={customSettings}
+      />
     </section>
   );
 };

@@ -4,6 +4,6 @@ import App from "App";
 
 test("renders header text", () => {
   const { getByText } = render(<App />);
-  const headerElement = getByText(/Default value/i);
+  const headerElement = getByText(/Default-styled Select element/i);
   expect(headerElement).toBeInTheDocument();
 });

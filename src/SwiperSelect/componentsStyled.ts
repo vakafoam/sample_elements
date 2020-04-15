@@ -10,6 +10,7 @@ export const SelectedState = styled.div<{ settings: SettingsType }>`
   background: ${({ settings }) => settings.backgroundColor};
   color: ${({ settings }) => settings.fontColor};
   font-size: ${({ settings }) => settings.fontSize};
+  font-family: ${({ settings }) => settings.fontFamily};
   margin: auto;
   padding: 10px;
   border-radius: 5px;
@@ -24,6 +25,7 @@ export const SelectedValue = styled.span<{ settings: SettingsType }>`
 `;
 
 export const ValueUnits = styled.span<{ settings: SettingsType }>`
+  font-family: ${({ settings }) => settings.fontFamily};
   font-size: calc(${({ settings }) => settings.fontSize} - 8px);
   margin-top: 5px;
 `;
@@ -36,6 +38,7 @@ export const EnableEdit = styled.button<{ settings: SettingsType }>`
   border: none;
   padding: 20px;
   background-color: transparent;
+  font-family: ${({ settings }) => settings.fontFamily};
   color: ${({ settings }) => settings.fontColor};
   cursor: pointer;
   text-transform: uppercase;
@@ -44,6 +47,7 @@ export const EnableEdit = styled.button<{ settings: SettingsType }>`
 
 export const SelectWrapper = styled.section<{ settings: SettingsType }>`
   position: relative;
+  font-family: ${({ settings }) => settings.fontFamily};
   width: ${({ settings }) => settings.width};
   overflow: hidden;
   margin: auto;
@@ -76,12 +80,11 @@ export const SelectOptions = styled.div<{ settings: SettingsType }>`
 export const SelectedTag = styled.span<{ settings: SettingsType }>`
   position: absolute;
   width: 100%;
-  top: 15px;
+  top: 5px;
   display: block;
   line-height: 1;
   color: ${({ settings }) => settings.activeFontColor};
-  font-size: calc(${({ settings }) => settings.fontSize} - 12px);
-  transition: opacity 2s ease-out;
+  font-size: calc(${({ settings }) => settings.fontSize} - 10px);
 `;
 
 export const SelectOption = styled.span<{
@@ -107,11 +110,12 @@ export const SelectOption = styled.span<{
 `;
 
 export const SubmitButton = styled.button<{ settings: SettingsType }>`
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
+  font-family: ${({ settings }) => settings.fontFamily};
   text-transform: uppercase;
   background: ${({ settings }) => settings.backgroundColor};
-  color: white;
+  color: ${({ settings }) => settings.activeFontColor};
 `;

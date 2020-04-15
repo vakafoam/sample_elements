@@ -1,8 +1,5 @@
 import * as styledComponents from "styled-components";
 
-// import { ThemeInterface } from "style/theme";
-// import { screenSizes } from "style/breakpoints";
-
 const {
   default: styled,
   css,

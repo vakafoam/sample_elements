@@ -50,6 +50,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
     setIsDragging(true);
   };
 
+  // Update active item on move/click
   const move = (e: any, idx?: number): void => {
     const dx = unify(e).clientX - (x0 || 0);
     if (idx !== undefined && Math.abs(dx) < 5) {
@@ -85,6 +86,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
     }
   };
 
+  // Manage arrow navigation
   const onKeyDown = (e: KeyboardEvent): void => {
     if (e.keyCode === 37 || e.keyCode === 40) {
       if (i === 0) return;
@@ -95,6 +97,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
     }
   };
 
+  // Update items positioning on move
   const getContentStyles = () => {
     return {
       width: `${itemsNum * ITEM_WIDTH}px`,
@@ -103,6 +106,7 @@ const SwipeToSelect = ({ options, settings, onSubmit }: PropsType) => {
     };
   };
 
+  // Update items opacity on drag
   const getOptionOpacity = (id: number): number => {
     if (id === tempI) return 1;
     if (Math.abs((tempI || i) - id) > 4) return 0.3;

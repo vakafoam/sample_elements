@@ -20,5 +20,5 @@ export const SETTINGS: SettingsType = {
   activeFontColor: "white",
   fontFamily: "Montserrat,sans-serif",
   fontSize: "24px",
-  units: "€/Month",
+  units: "Year",
 };
